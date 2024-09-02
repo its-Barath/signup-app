@@ -1,0 +1,466 @@
+// src/components/BottomNavigationComponent.jsx
+import React from 'react';
+import { BottomNavigation, BottomNavigationAction } from '@mui/material';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import GoogleIcon from '@mui/icons-material/Google';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+
+const BottomNavigationComponent = () => {
+  return (
+    <BottomNavigation showLabels>
+      <BottomNavigationAction label="GitHub" icon={<GitHubIcon />} />
+      <BottomNavigationAction label="Gmail" icon={<GoogleIcon />} />
+      <BottomNavigationAction label="Instagram" icon={<InstagramIcon />} />
+      <BottomNavigationAction label="LinkedIn" icon={<LinkedInIcon />} />
+    </BottomNavigation>
+  );
+};
+
+export default BottomNavigationComponent;
+
+
+
+import React from 'react';
+import { Button } from '@mui/material';
+
+const ButtonComponent = ({ children, ...props }) => {
+  return (
+    <Button variant="contained" color="primary" fullWidth {...props}>
+      {children}
+    </Button>
+  );
+};
+
+export default ButtonComponent;
+
+
+import React from 'react';
+import { FormControlLabel, Checkbox } from '@mui/material';
+
+const CheckboxComponent = ({ label }) => {
+  return (
+    <FormControlLabel
+      control={<Checkbox />}
+      label={label}
+    />
+  );
+};
+
+export default CheckboxComponent;
+
+
+import React from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { TextField, FormControl, InputLabel } from '@mui/material';
+import { styled } from '@mui/system';
+
+// Styled wrapper for DatePicker
+const StyledFormControl = styled(FormControl)(({ theme }) => ({
+  margin: theme.spacing(1),
+  width: '100%',
+}));
+
+const DateFieldComponent = ({ label, selectedDate, onChange }) => {
+  return (
+    <StyledFormControl variant="outlined">
+      <InputLabel shrink>{label}</InputLabel>
+      <DatePicker
+        selected={selectedDate}
+        onChange={(date) => onChange(date)}
+        customInput={<TextField fullWidth variant="outlined" />}
+        dateFormat="MM/dd/yyyy"
+        disableFuture
+      />
+    </StyledFormControl>
+  );
+};
+
+export default DateFieldComponent;
+
+
+import React, { useState } from 'react';
+// import React from 'react';
+import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+
+const RadioGroupComponent = ({ value, onChange }) => {
+  const [gender, setGender] = useState('');
+  return (
+    <FormControl component="fieldset" margin="normal">
+      <FormLabel component="legend">Gender</FormLabel>
+        <RadioGroup
+            aria-label="gender"
+            name="gender"   
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}   
+            style={{ display: 'flex', flexDirection: 'row' }} // Added flexbox styles
+        >
+            <FormControlLabel value="male" control={<Radio />} label="Male" />
+            <FormControlLabel value="female" control={<Radio />} label="Female" />
+            <FormControlLabel value="other" control={<Radio />} label="Other"   
+    />
+        </RadioGroup>
+    </FormControl>
+  );
+};
+
+export default RadioGroupComponent;
+
+
+
+import React from 'react';
+import { Grid, IconButton } from '@mui/material';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import GoogleIcon from '@mui/icons-material/Google';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+
+const SocialMediaIcons = () => {
+  return (
+    <Grid container spacing={0.5} justifyContent="center">
+      <Grid item>
+        <IconButton color="primary" size="large">
+          <GitHubIcon />
+        </IconButton>
+      </Grid>
+      <Grid item>
+        <IconButton color="primary" size="large">
+          <GoogleIcon />
+        </IconButton>
+      </Grid>
+      <Grid item>
+        <IconButton color="primary" size="large">
+          <FacebookIcon />
+        </IconButton>
+      </Grid>
+      <Grid item>
+        <IconButton color="primary" size="large">
+          <LinkedInIcon />
+        </IconButton>
+      </Grid>
+    </Grid>
+  );
+};
+
+export default SocialMediaIcons;
+
+
+import React from 'react';
+import { TextField } from '@mui/material';
+
+const TextFieldComponent = ({ label, type = 'text', ...props }) => {
+  return (
+    <TextField
+      label={label}
+      type={type}
+      fullWidth
+      variant="outlined"
+      margin="normal"
+      {...props}
+    />
+  );
+};
+
+export default TextFieldComponent;
+
+
+
+import React from 'react';
+import { TextField, Button, FormControlLabel, Checkbox, Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import SocialMediaIcons  from '../components/SocialMediaIcons';
+import '../styles/Login.css'; // Correct path to the Login.css file
+
+const Login = () => {
+    const navigate = useNavigate();
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        // Handle login logic
+    };
+
+    return (
+        <div className="login-container">
+            <form className="login-form" onSubmit={handleLogin}>
+                <h2>Login</h2>
+                <TextField
+                    label="Email"
+                    type="email"
+                    variant="outlined"
+                    margin="normal"
+                    size="small"
+                    textAlign="center"
+                    fullWidth
+                    required
+                />
+                <TextField
+                    label="Password"
+                    type="password"
+                    variant="outlined"
+                    margin="normal"
+                    size="small"
+                    fullWidth
+                    required
+                />
+                <FormControlLabel textAlign="right"
+                    control={<Checkbox name="rememberMe" />}
+                    label="Remember Me"
+                />
+                <Button type="submit" variant="contained" color="primary" fullWidth>
+                    Login
+                </Button>
+                <Box textAlign="center" marginTop={2}>
+                    <span>Don't have an account? </span>
+                    <Button style={{marginTop:0, color: 'blue'}}
+                        variant="text"
+                        onClick={() => navigate('/register')}
+                        // style={{ textTransform: 'none', color: 'blue' }}
+                    >
+                        Sign Up
+                    </Button>
+                </Box>
+                <Box textAlign="center">
+                    <SocialMediaIcons />
+                </Box>
+            </form>
+        </div>
+    );
+};
+
+export default Login;
+
+
+
+import React, { useState } from 'react';
+import { TextField, Button ,Box} from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import '../styles/Register.css'; // Correct path to the Register.css file
+import RadioGroupComponent from '../components/RadioGroupComponent';
+
+const Register = () => {
+    // const [gender, setGender] = useState('');
+    const [dob, setDob] = useState('');
+    const navigate = useNavigate();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Handle form submission
+    };
+
+    return (
+        <div className="register-container">
+            <form className="register-form" onSubmit={handleSubmit}>
+                <h2>Register</h2>
+                <TextField
+                    label="Full Name"
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    required
+                />
+                <TextField
+                    label="Email"
+                    type="email"
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    required
+                />
+                <TextField
+                    label="Password"
+                    type="password"
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    required
+                />
+                <RadioGroupComponent/>
+                <TextField
+                    label="Date of Birth"
+                    type="date"
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    value={dob}
+                    onChange={(e) => setDob(e.target.value)}
+                />
+                <Button type="submit" variant="contained" color="primary" fullWidth>
+                    Register
+                </Button>
+                <Box textAlign="center" marginTop={2}>
+                <span>Already have an account? </span>
+                <Button style={{marginTop:0, color: 'blue'}}
+                    variant="text"
+                    onClick={() => navigate('/')}
+                    // style={{ textTransform: 'none', color: 'blue' }}
+                >
+                    Log in
+                </Button>
+            </Box>
+            </form>
+        </div>
+    );
+};
+
+export default Register;
+
+
+
+.login-container{
+    background: linear-gradient(90deg, #08203e 0%, #557c93 100%);
+}
+
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+}
+
+.login-form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+}
+
+.login-form h2 {
+    margin-bottom: 20px;
+}
+
+.login-form .MuiTextField-root {
+    margin-bottom: 16px;
+}
+
+.login-form .MuiButton-root {
+    margin-top: 16px;
+}
+
+.login-form .MuiFormControl-root {
+    margin-bottom: 16px;
+}
+
+.login-form a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.login-form .MuiButton-root.MuiButton-outlined {
+    margin: 4px;
+}
+
+
+
+
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* width: 500px; */
+    /* background-color: #f5f5f5; */
+    background: linear-gradient(90deg, #08203e 0%, #557c93 100%);
+
+}
+
+.register-form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 500px;
+    /* max-width: 400px; */
+}
+
+.register-form h2 {
+    margin-bottom: 20px;
+}
+
+.register-form .MuiTextField-root {
+    margin-bottom: 16px;
+}
+
+.register-form .MuiButton-root {
+    margin-top: 16px;
+}
+
+.register-form .MuiFormControl-root {
+    margin-bottom: 16px;
+}
+
+.register-form a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+
+
+
+
+
+
+/* src/styles/styles.css */
+
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form > * {
+  margin-bottom: 16px;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.link {
+  color: #1976d2;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+
+
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Login from './pages/Login';
+import Register from './pages/Register';
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
+
+
+
+
+
